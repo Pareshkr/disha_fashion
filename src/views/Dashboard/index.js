@@ -7,6 +7,7 @@ import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgres
 //project import
 import SalesLineCard from './SalesLineCard';
 import SalesLineCardData from './chart/sale-chart-1';
+import statisticsChartsData from 'data/statistics-charts-data';
 
 import RevenuChartCard from './RevenuChartCard';
 import RevenuChartCardData from './chart/revenu-chart';
@@ -14,18 +15,18 @@ import ReportCard from './ReportCard';
 import { gridSpacing } from 'config.js';
 
 // assets
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+// import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 // import MonetizationOnTwoTone from '@mui/icons-material/MonetizationOnTwoTone';
 // import DescriptionTwoTone from '@mui/icons-material/DescriptionTwoTone';
 // import ThumbUpAltTwoTone from '@mui/icons-material/ThumbUpAltTwoTone';
 // import CalendarTodayTwoTone from '@mui/icons-material/CalendarTodayTwoTone';
-import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone';
+// import BusinessTwoToneIcon from '@mui/icons-material/BusinessTwoTone';
 // import CenterFocusStrongTwoToneIcon from '@mui/icons-material/CenterFocusStrongTwoTone';
 // import StoreTwoToneIcon from '@mui/icons-material/StoreTwoTone';
-import LocalOfferTwoToneIcon from '@mui/icons-material/LocalOfferTwoTone';
-import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
-import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
+// import LocalOfferTwoToneIcon from '@mui/icons-material/LocalOfferTwoTone';
+// import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
+// import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
 
 // custom style
 const FlatCardBlock = styled((props) => <Grid item sm={6} xs={12} {...props} />)(({ theme }) => ({
@@ -47,46 +48,75 @@ const Default = () => {
 
   return (
     <Grid container spacing={gridSpacing}>
+      <Grid item xs={12} sx={{ mb: -1, mt: -2 }}>
+        <Typography variant="h3">Insights</Typography>
+      </Grid>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item lg={3} sm={6} xs={12}>
             <ReportCard
-              primary="93%"
-              secondary="Shelf-fullness"
+              // primary="93%"
+              // secondary="Shelf-fullness"
+              // color={theme.palette.success.main}
+              // footerData="5% increase"
+              // iconPrimary={BusinessTwoToneIcon}
+              // iconFooter={TrendingUpIcon}
+              chart={statisticsChartsData[1].chart}
+              title="Average Shelf Up-keep"
+              count="86%"
+              percentage={0.5}
+              chipColor="success"
               color={theme.palette.success.main}
-              footerData="5% increase"
-              iconPrimary={BusinessTwoToneIcon}
-              iconFooter={TrendingUpIcon}
             />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
             <ReportCard
-              primary="74%"
-              secondary="Color Assort."
+              // primary="74%"
+              // secondary="Color Assort."
+              // color={theme.palette.warning.main}
+              // footerData="7% increase"
+              // iconPrimary={ColorLensTwoToneIcon}
+              // iconFooter={TrendingUpIcon}
+              chart={statisticsChartsData[2].chart}
+              title="Visual Merchandising Compliance"
+              count="78%"
+              percentage={2}
+              chipColor="warning"
               color={theme.palette.warning.main}
-              footerData="7% increase"
-              iconPrimary={ColorLensTwoToneIcon}
-              iconFooter={TrendingUpIcon}
             />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
             <ReportCard
-              primary="45%"
-              secondary="Category Assort."
+              // primary="45%"
+              // secondary="Category Assort."
+              // color={theme.palette.error.main}
+              // footerData="3% decrease"
+              // iconPrimary={CategoryTwoToneIcon}
+              // iconFooter={TrendingDownIcon}
+              chart={statisticsChartsData[3].chart}
+              title="Discounts & promos execution"
+              count="68%"
+              percentage={0.5}
+              isLoss
+              chipColor="error"
               color={theme.palette.error.main}
-              footerData="3% decrease"
-              iconPrimary={CategoryTwoToneIcon}
-              iconFooter={TrendingDownIcon}
             />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
             <ReportCard
-              primary="67%"
-              secondary="Brands"
+              // primary="67%"
+              // secondary="Brands"
+              // color={theme.palette.warning.main}
+              // footerData="10% increase"
+              // iconPrimary={LocalOfferTwoToneIcon}
+              // iconFooter={TrendingUpIcon}
+              chart={statisticsChartsData[4].chart}
+              title="Anomalies Found"
+              count="27"
+              percentage={0.5}
+              isLoss
+              chipColor="warning"
               color={theme.palette.warning.main}
-              footerData="10% increase"
-              iconPrimary={LocalOfferTwoToneIcon}
-              iconFooter={TrendingUpIcon}
             />
           </Grid>
         </Grid>

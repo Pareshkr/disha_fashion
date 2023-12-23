@@ -3,7 +3,12 @@ import { Outlet } from 'react-router-dom';
 
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
-import { useMediaQuery, AppBar, Box, Toolbar } from '@mui/material';
+import {
+  // useMediaQuery,
+  AppBar,
+  Box,
+  Toolbar
+} from '@mui/material';
 
 // project import
 import { drawerWidth } from 'config.js';
@@ -36,20 +41,20 @@ const OutletDiv = styled((props) => <div {...props} />)(({ theme }) => ({
 
 const MainLayout = () => {
   const theme = useTheme();
-  const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
+  // const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  React.useEffect(() => {
-    setDrawerOpen(matchUpMd);
-  }, [matchUpMd]);
+  // React.useEffect(() => {
+  //   setDrawerOpen(matchUpMd);
+  // }, [matchUpMd]);
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
-      <AppBar position="fixed" sx={{ zIndex: 1200 }}>
+      <AppBar className="bg-[#fff]" position="fixed" sx={{ zIndex: 1200 }}>
         <Toolbar>
           <Header drawerOpen={drawerOpen} drawerToggle={handleDrawerToggle} />
         </Toolbar>

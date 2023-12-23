@@ -4,6 +4,7 @@ import React from 'react';
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
 import { useMediaQuery, Divider, Drawer, Grid, Box } from '@mui/material';
+import { Typography } from '@mui/material';
 
 // third party
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -14,7 +15,7 @@ import { drawerWidth } from 'config.js';
 
 // assets
 // import logo from 'assets/images/logo.svg';
-import NeophyteLogo from 'assets/images/neophyte_logo.png';
+// import NeophyteLogo from 'assets/images/neophyte_logo.png';
 
 // custom style
 const Nav = styled((props) => <nav {...props} />)(({ theme }) => ({
@@ -42,13 +43,17 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
           sx={{
             ...theme.mixins.toolbar,
             lineHeight: 0,
-            background: theme.palette.primary.main,
+            // background: theme.palette.primary.main,
+            background: 'white',
             boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)'
           }}
         >
-          <Grid item>
-            <img style={{ width: '70%', marginLeft: "1.5rem" }} src={NeophyteLogo} alt="Logo" />
-          </Grid>
+          {/* <Grid item> */}
+            {/* <img style={{ width: '70%', marginLeft: "1.5rem" }} src={NeophyteLogo} alt="Logo" /> */}
+            <Typography variant="h1" align="left" className='text-slate-600' sx={{width: "100%", paddingLeft: 3}}>
+              Disha
+            </Typography>
+          {/* </Grid> */}
         </Grid>
       </Box>
       <Divider />
@@ -64,6 +69,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
     <Nav>
       <Drawer
         container={container}
+        // variant={matchUpMd ? 'persistent' : 'temporary'}
         variant={matchUpMd ? 'persistent' : 'temporary'}
         anchor="left"
         open={drawerOpen}
@@ -72,7 +78,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             borderRight: 'none',
-            boxShadow: '0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15)',
+            // boxShadow: '0 0.15rem 1.75rem 0 rgba(33, 40, 50, 0.15)',
             top: { md: 64, sm: 0 }
           }
         }}

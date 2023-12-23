@@ -85,7 +85,7 @@ export function theme() {
       }
     },
     typography: {
-      fontFamily: `'Poppins', sans-serif`,
+      fontFamily: `'baloo 2', sans-serif`,
       h6: {
         fontWeight: 600,
         color: textSecondary,

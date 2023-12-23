@@ -49,7 +49,7 @@ const ProfileSection = () => {
   return (
     <>
       <Button
-        sx={{ minWidth: { sm: 50, xs: 35 }, color: 'white' }}
+        sx={{ minWidth: { sm: 50, xs: 35 }, color: 'black' }}
         ref={anchorRef}
         aria-controls={open ? 'menu-list-grow' : undefined}
         aria-haspopup="true"
@@ -57,7 +57,7 @@ const ProfileSection = () => {
         onClick={handleToggle}
         color="inherit"
       >
-        <AccountCircleTwoToneIcon sx={{ fontSize: '1.5rem' }} />
+        <AccountCircleTwoToneIcon sx={{ fontSize: '1.7rem' }} />
       </Button>
       <Popper
         placement="bottom-end"
