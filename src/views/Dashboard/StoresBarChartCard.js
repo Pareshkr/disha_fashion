@@ -10,7 +10,7 @@ import Chart from 'react-apexcharts';
 
 // ==============================|| SALES LINE CARD ||============================== //
 
-const SalesLineCard = ({ bgColor, chartData, footerData, icon, title, percentage }) => {
+const StoresBarChartCard = ({ bgColor, chartData, footerData, icon, title, percentage }) => {
   const theme = useTheme();
   let footerHtml;
 
@@ -44,7 +44,7 @@ const SalesLineCard = ({ bgColor, chartData, footerData, icon, title, percentage
                       <Typography variant="h3" color="inherit">
                         {title}
                       </Typography>
-                      <Typography className='self-end' variant="subtitle1" color="inherit">
+                      <Typography className="self-end" variant="subtitle1" color="inherit">
                         Stores
                       </Typography>
                     </Stack>
@@ -83,7 +83,7 @@ const SalesLineCard = ({ bgColor, chartData, footerData, icon, title, percentage
   );
 };
 
-SalesLineCard.propTypes = {
+StoresBarChartCard.propTypes = {
   bgColor: PropTypes.string,
   chartData: PropTypes.object,
   footerData: PropTypes.array,
@@ -92,4 +92,4 @@ SalesLineCard.propTypes = {
   percentage: PropTypes.string
 };
 
-export default SalesLineCard;
+export default StoresBarChartCard;

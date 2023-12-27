@@ -1,22 +1,47 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 
 // material-ui
-import { useTheme, styled } from '@mui/material/styles';
-import { Grid, Card, CardHeader, CardContent, Typography, Divider, LinearProgress } from '@mui/material';
+import {
+  useTheme
+  // styled
+} from '@mui/material/styles';
+// import Box from '@mui/material';
+import {
+  Grid,
+  Card,
+  // CardHeader,
+  CardContent,
+  Typography,
+  // Divider,
+  LinearProgress,
+  Box,
+  Stack,
+  TextField,
+  MenuItem
+} from '@mui/material';
 
 //project import
-import SalesLineCard from './SalesLineCard';
-import SalesLineCardData from './chart/sale-chart-1';
+// import SalesLineCard from './SalesLineCard';
+// import SalesLineCardData from './chart/sale-chart-1';
+// import StoresBarChartCard from './StoresBarChartCard';
+// import StoresBarCardData from './chart/stores-chart';
 import statisticsChartsData from 'data/statistics-charts-data';
+// import DatePickerComp from './DatePicker';
 
 import RevenuChartCard from './RevenuChartCard';
 import RevenuChartCardData from './chart/revenu-chart';
-import ReportCard from './ReportCard';
+import KpiCard from './KpiCard';
 import { gridSpacing } from 'config.js';
+
+// import AnomaliesChartCard from './AnomaliesChartCard';
+import AnomaliesStackedCard from './AnomaliesStackedCard';
+// import AnomaliesBarCardData from './chart/anomalies-chart';
+
+import Chart from 'react-apexcharts';
 
 // assets
 // import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+// import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 // import MonetizationOnTwoTone from '@mui/icons-material/MonetizationOnTwoTone';
 // import DescriptionTwoTone from '@mui/icons-material/DescriptionTwoTone';
 // import ThumbUpAltTwoTone from '@mui/icons-material/ThumbUpAltTwoTone';
@@ -29,38 +54,210 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 // import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
 
 // custom style
-const FlatCardBlock = styled((props) => <Grid item sm={6} xs={12} {...props} />)(({ theme }) => ({
-  padding: '25px 25px',
-  borderLeft: '1px solid' + theme.palette.background.default,
-  [theme.breakpoints.down('sm')]: {
-    borderLeft: 'none',
-    borderBottom: '1px solid' + theme.palette.background.default
-  },
-  [theme.breakpoints.down('md')]: {
-    borderBottom: '1px solid' + theme.palette.background.default
-  }
-}));
+// const FlatCardBlock = styled((props) => <Grid item sm={6} xs={12} {...props} />)(({ theme }) => ({
+//   padding: '25px 25px',
+//   borderLeft: '1px solid' + theme.palette.background.default,
+//   [theme.breakpoints.down('sm')]: {
+//     borderLeft: 'none',
+//     borderBottom: '1px solid' + theme.palette.background.default
+//   },
+//   [theme.breakpoints.down('md')]: {
+//     borderBottom: '1px solid' + theme.palette.background.default
+//   }
+// }));
+
+const histogramData = {
+  asuk: [5, 10, 20, 25, 30, 35, 25, 15, 3, 2],
+  vmc: [10, 20, 30, 25, 15, 10, 15, 20, 17, 8],
+  dpe: [8, 15, 25, 40, 30, 10, 10, 5, 5, 12]
+};
+
+const histogramChartRequirements = {
+  totalStores: 150,
+  selectOptions: [
+    {
+      label: 'Avg. shelf Up-keep',
+      value: 'ASUK'
+    },
+    {
+      label: 'Vis. Merch. Compliance',
+      value: 'VMC'
+    },
+    {
+      label: 'Disc. & promos exe.',
+      value: 'DPE'
+    }
+  ]
+};
 
 // ==============================|| DASHBOARD DEFAULT ||============================== //
 
 const Default = () => {
   const theme = useTheme();
+  const accentColDark = theme.palette.success.dark;
+  const accentColLight = theme.palette.success.light;
+  const accentColMain = theme.palette.success.main;
+
+  const { totalStores } = histogramChartRequirements;
+  const { selectOptions } = histogramChartRequirements;
+  const [selected, setSelected] = useState(selectOptions[0].value);
+  const [seriesData, setSeriesData] = useState(histogramData.asuk);
+  // const [selectedDate, setSelectedDate] = useState('');
+
+  let series = [
+    {
+      name: 'stores',
+      data: seriesData.map((value, i) => ({
+        x: 5 + i * 10,
+        y: value
+      }))
+    }
+  ];
+
+  const histogramOptions = {
+    options: {
+      chart: {
+        type: 'bar',
+        height: 297,
+        toolbar: {
+          show: false
+        }
+      },
+      colors: ['#fff'],
+      plotOptions: {
+        bar: {
+          columnWidth: '65%',
+          borderRadius: 4
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      xaxis: {
+        type: 'numeric',
+        min: 0,
+        max: 100,
+        tickAmount: 10,
+        labels: {
+          show: false,
+          formatter: (x) => x
+        },
+        show: false,
+        // categories: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        }
+      },
+      yaxis: {
+        show: false,
+        min: 0,
+        max: Math.max(...seriesData)
+      },
+      tooltip: {
+        theme: 'dark',
+        x: {
+          formatter: (x) => {
+            return 'Range: ' + (x - 5) + '-' + (x + 5) + ' %';
+          }
+        }
+      },
+      grid: {
+        show: false
+      }
+    }
+  };
+
+  const progressChart = {
+    options: {
+      chart: {
+        height: 200,
+        type: 'radialBar',
+        sparkline: {
+          enabled: true
+        }
+      },
+      colors: [accentColLight],
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            margin: 0,
+            size: '30%'
+            // background: '#293450'
+          },
+          track: {
+            dropShadow: {
+              enabled: true,
+              top: 2,
+              left: 0,
+              blur: 4,
+              opacity: 0.15
+            }
+          },
+          dataLabels: {
+            show: false,
+            name: {
+              offsetY: -10,
+              color: '#fff',
+              fontSize: '13px'
+            },
+            value: {
+              color: '#fff',
+              fontSize: '30px',
+              show: false
+            }
+          }
+        }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'vertical',
+          gradientToColors: [accentColDark],
+          stops: [0, 100]
+        }
+      },
+      stroke: {
+        // lineCap: 'round'
+      }
+      // labels: ['Progress']
+    },
+    series: [68]
+  };
+
+  useEffect(() => {
+    switch (selected) {
+      case 'ASUK':
+        setSeriesData(histogramData.asuk);
+        break;
+      case 'VMC':
+        setSeriesData(histogramData.vmc);
+        break;
+      case 'DPE':
+        setSeriesData(histogramData.dpe);
+        break;
+      default:
+      // Handle default case
+    }
+  }, [selected]);
 
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12} sx={{ mb: -1, mt: -2 }}>
-        <Typography variant="h3">Insights</Typography>
+        <Stack direction={'row'} justifyContent={'space-between'}>
+          <Typography variant="h3">Insights</Typography>
+          <div className=" w-64">
+            {/* <DatePickerComp SetSelectedDate={setSelectedDate} /> */}
+          </div>
+        </Stack>
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
           <Grid item lg={3} sm={6} xs={12}>
-            <ReportCard
-              // primary="93%"
-              // secondary="Shelf-fullness"
-              // color={theme.palette.success.main}
-              // footerData="5% increase"
-              // iconPrimary={BusinessTwoToneIcon}
-              // iconFooter={TrendingUpIcon}
+            <KpiCard
               chart={statisticsChartsData[1].chart}
               title="Average Shelf Up-keep"
               count="86%"
@@ -70,13 +267,7 @@ const Default = () => {
             />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
-            <ReportCard
-              // primary="74%"
-              // secondary="Color Assort."
-              // color={theme.palette.warning.main}
-              // footerData="7% increase"
-              // iconPrimary={ColorLensTwoToneIcon}
-              // iconFooter={TrendingUpIcon}
+            <KpiCard
               chart={statisticsChartsData[2].chart}
               title="Visual Merchandising Compliance"
               count="78%"
@@ -86,13 +277,7 @@ const Default = () => {
             />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
-            <ReportCard
-              // primary="45%"
-              // secondary="Category Assort."
-              // color={theme.palette.error.main}
-              // footerData="3% decrease"
-              // iconPrimary={CategoryTwoToneIcon}
-              // iconFooter={TrendingDownIcon}
+            <KpiCard
               chart={statisticsChartsData[3].chart}
               title="Discounts & promos execution"
               count="68%"
@@ -103,13 +288,7 @@ const Default = () => {
             />
           </Grid>
           <Grid item lg={3} sm={6} xs={12}>
-            <ReportCard
-              // primary="67%"
-              // secondary="Brands"
-              // color={theme.palette.warning.main}
-              // footerData="10% increase"
-              // iconPrimary={LocalOfferTwoToneIcon}
-              // iconFooter={TrendingUpIcon}
+            <KpiCard
               chart={statisticsChartsData[4].chart}
               title="Anomalies Found"
               count="27"
@@ -123,87 +302,195 @@ const Default = () => {
       </Grid>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
-          <Grid item lg={8} xs={12}>
+          <Grid item lg={9} xs={12}>
             <Grid container spacing={gridSpacing}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={7}>
                 <Grid container spacing={gridSpacing}>
                   <Grid item xs={12}>
-                    <SalesLineCard
-                      chartData={SalesLineCardData}
-                      title="Name to be set"
-                      percentage="3%"
-                      icon={<TrendingDownIcon />}
-                      // footerData={[
-                      //   {
-                      //     value: '$4230',
-                      //     label: 'Total Revenue'
-                      //   },
-                      //   {
-                      //     value: '321',
-                      //     label: 'Today Sales'
-                      //   }
-                      // ]}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sx={{ display: { md: 'block', sm: 'none' } }}>
+                    {/* <SalesLineCard chartData={SalesLineCardData} title="150" percentage="3%" icon={<TrendingDownIcon />} /> */}
+                    {/* <StoresBarChartCard chartData={StoresBarCardData} title="150" percentage="3%" icon={<TrendingDownIcon />} /> */}
                     <Card>
-                      <CardContent sx={{ p: '0 !important' }}>
-                        <Grid container alignItems="center" spacing={0}>
-                          <FlatCardBlock>
-                            <Grid container alignItems="center" spacing={1}>
-                              <Grid item>
-                                <Typography variant="subtitle2" align="left">
-                                  FILLED{' '}
-                                </Typography>
-                              </Grid>
-                              <Grid item sm zeroMinWidth>
-                                <Typography variant="h5" sx={{ color: theme.palette.success.main }} align="right">
-                                  14
-                                </Typography>
-                              </Grid>
-                            </Grid>
-                          </FlatCardBlock>
-                          <FlatCardBlock>
-                            <Grid container alignItems="center" spacing={1}>
-                              <Grid item>
-                                <Typography variant="subtitle2" align="left">
-                                  EMPTY
-                                </Typography>
-                              </Grid>
-                              <Grid item sm zeroMinWidth>
-                                <Typography variant="h5" sx={{ color: theme.palette.error.main }} align="right">
-                                  3
-                                </Typography>
+                      <CardContent sx={{ padding: 0, paddingBottom: '0 !important' }}>
+                        <Box
+                          color="#fff"
+                          // bgcolor={bgColor ? bgColor : theme.palette.primary.main}
+                          bgcolor={theme.palette.primary.main}
+                          p={3}
+                        >
+                          <Grid container justifyContent="space-between" alignItems="center">
+                            <Grid item>
+                              <Grid container spacing={1}>
+                                <Stack direction={'row'} spacing={1}>
+                                  <Typography variant="h2" color="inherit">
+                                    {totalStores}
+                                  </Typography>
+                                  <Typography paddingBottom={0.6} className="self-end" variant="h5" color="inherit">
+                                    Stores
+                                  </Typography>
+                                </Stack>
                               </Grid>
                             </Grid>
-                          </FlatCardBlock>
-                        </Grid>
+                            <Grid item>
+                              <Grid container alignItems="center">
+                                <TextField
+                                  id="standard-select-currency"
+                                  size="small"
+                                  select
+                                  value={selected}
+                                  onChange={(e) => setSelected(e.target.value)}
+                                  sx={{
+                                    '& .MuiInputBase-input': {
+                                      paddingBottom: 0.5,
+                                      paddingTop: 0.7,
+                                      fontSize: '1rem',
+                                      fontWeight: 600,
+                                      color: 'white'
+                                    }
+                                  }}
+                                >
+                                  {histogramChartRequirements.selectOptions.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                      {option.label}
+                                    </MenuItem>
+                                  ))}
+                                </TextField>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                          <Grid item>
+                            <Chart
+                              options={histogramOptions.options}
+                              series={series}
+                              type={histogramOptions.options.chart.type}
+                              height={histogramOptions.options.chart.height}
+                            />
+                          </Grid>
+                        </Box>
                       </CardContent>
                     </Card>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <RevenuChartCard chartData={RevenuChartCardData} />
+              <Grid item xs={12} md={5}>
+                <Grid container spacing={gridSpacing}>
+                  <Grid item xs={12}>
+                    <Card>
+                      <CardContent>
+                        <Grid container justifyContent="space-between" alignItems="center">
+                          <Grid item>
+                            <Grid container spacing={1}>
+                              <Typography paddingTop={1} className="self-end" variant="h5" color="inherit">
+                                Brand Fullness
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                          <Grid item>
+                            <Grid container alignItems="center">
+                              <TextField
+                                id="standard-select-currency"
+                                size="small"
+                                select
+                                value={selected}
+                                onChange={(e) => setSelected(e.target.value)}
+                                sx={{
+                                  '& .MuiInputBase-input': {
+                                    paddingBottom: 0.5,
+                                    paddingTop: 0.7,
+                                    fontSize: '1rem',
+                                    fontWeight: 600
+                                    // color: 'white'
+                                  }
+                                }}
+                              >
+                                {histogramChartRequirements.selectOptions.map((option) => (
+                                  <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                        <Grid item>
+                          <RevenuChartCard chartData={RevenuChartCardData} />
+                        </Grid>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                </Grid>
+                {/* <RevenuChartCard chartData={RevenuChartCardData} /> */}
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container paddingTop={3} spacing={gridSpacing}>
+                <Grid item xs={12}>
+                  <Card>
+                    {/* <CardHeader
+                      title={
+                        <Typography component="div" className="card-header">
+                          Anomalies Resolved
+                        </Typography>
+                      }
+                    />
+                    <Divider /> */}
+                    <CardContent>
+                      {/* <AnomaliesChartCard chartData={AnomaliesBarCardData} /> */}
+                      <AnomaliesStackedCard />
+                    </CardContent>
+                  </Card>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item lg={4} xs={12}>
+          <Grid item lg={3} xs={12}>
             <Card>
-              <CardHeader
+              {/* <CardHeader
                 title={
                   <Typography component="div" className="card-header">
                     Capture Progress
                   </Typography>
                 }
-              />
-              <Divider />
-              <CardContent className="overflow-y-auto scrollbar h-[320px]">
+              /> */}
+              <Grid container spacing={gridSpacing}>
+                <Grid item xs={6} sm={4} md={3} lg={7} xl={6}>
+                  <Chart
+                    options={progressChart.options}
+                    series={progressChart.series}
+                    type={progressChart.options.chart.type}
+                    height={progressChart.options.chart.height}
+                  />
+                </Grid>
+                <Grid item alignContent={'center'} xs={6} sm={8} md={9} lg={5} xl={6}>
+                  {/* <Grid container spacing={gridSpacing}> */}
+                  <div className="flex flex-col gap-1">
+                    <Typography variant="h1" sx={{ color: accentColMain, paddingTop: 8 }}>
+                      68 %
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                      Capture Progress
+                    </Typography>
+                  </div>
+                  {/* </Grid> */}
+                </Grid>
+              </Grid>
+              {/* <Divider /> */}
+              <CardContent
+                sx={{
+                  height: 370,
+                  [theme.breakpoints.up('md')]: {
+                    height: 450 // Height for screens equal to or larger than 'md' breakpoint
+                  },
+                  [theme.breakpoints.up('lg')]: {
+                    height: 607 // Height for screens equal to or larger than 'lg' breakpoint
+                  }
+                }}
+                className="overflow-y-auto flex flex-col gap-1 scrollbar"
+              >
                 <Grid container spacing={gridSpacing}>
                   <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
+                    <Grid container justifyContent={'space-between'} alignItems="center" spacing={1}>
                       <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">TU30-Lucknow Jankipuram-Lucknow</Typography>
+                        <Typography variant="body2">TU30</Typography>
                       </Grid>
                       <Grid item>
                         <Typography variant="body2" align="right">
@@ -211,154 +498,22 @@ const Default = () => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="direct" value={80} color="primary" />
+                        <LinearProgress
+                          sx={{
+                            borderRadius: 3,
+                            height: 5,
+                            [theme.breakpoints.up('xl')]: {
+                              height: 5 // Height for screens equal to or larger than 'lg' breakpoint
+                            }
+                          }}
+                          variant="determinate"
+                          aria-label="direct"
+                          value={80}
+                          color="primary"
+                        />
                       </Grid>
                       <Grid item sm zeroMinWidth>
                         <Typography variant="body2">1:00 PM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">8041-Jamshedpr Bombay Twr-Jamshedpur</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          50%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Social" value={50} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">12:48 PM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">TK56-Luknow Ring Road-Lucknow</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          20%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Referral" value={20} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">12:37 PM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">T827-Pratapgar BeladeviRd-Pratapgarh</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          60%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Bounce" value={60} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">12:25 PM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">TO09-Faizabad Civil Lines-Faizabad</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          40%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Internet" value={40} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">12:19 PM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">8136-Kolkata Axis Mall-Kolkata</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          40%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Internet" value={40} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">12:13 PM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">TX73-Kolkata Dum Dum Rd-Kolkata</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          40%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Internet" value={40} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">12:06 PM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">8114-Coimbator Brokefield-Coimbatore</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          40%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Internet" value={40} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">11:50 AM</Typography>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid container alignItems="center" spacing={1}>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">1882-Jorhat City Centre-Jorhat</Typography>
-                      </Grid>
-                      <Grid item>
-                        <Typography variant="body2" align="right">
-                          40%
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <LinearProgress variant="determinate" aria-label="Internet" value={40} color="primary" />
-                      </Grid>
-                      <Grid item sm zeroMinWidth>
-                        <Typography variant="body2">10:36 AM</Typography>
                       </Grid>
                     </Grid>
                   </Grid>

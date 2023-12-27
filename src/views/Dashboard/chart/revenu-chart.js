@@ -1,13 +1,13 @@
-import value from 'assets/scss/_themes-vars.scss';
+// import value from 'assets/scss/_themes-vars.scss';
 // eslint-disable-next-line
 export default {
-  height: 305,
+  height: 343,
   type: 'donut',
   options: {
     dataLabels: {
       enabled: false
     },
-    labels: ['>80%', '50-80%', '<50%'],
+    labels: ['Zivame %', 'Clovia %', 'Amanté %', 'Jockey %'],
     legend: {
       show: true,
       position: 'bottom',
@@ -20,7 +20,35 @@ export default {
       horizontal: 10,
       vertical: 10
     },
-    colors: [value.primary, value.info, value.error]
+    colors: ['#002F01', '#7DFFCC', '#00C0A9', '#669C82'],
+    responsive: [
+      {
+        breakpoint: 900,
+        options: {
+          legend: {
+            show: true,
+            position: 'right',
+            fontFamily: 'inherit',
+            labels: {
+              colors: 'inherit'
+            }
+          }
+        }
+      },
+      {
+        breakpoint: 600,
+        options: {
+          legend: {
+            show: true,
+            position: 'bottom',
+            fontFamily: 'inherit',
+            labels: {
+              colors: 'inherit'
+            }
+          }
+        }
+      }
+    ]
   },
-  series: [1258, 975, 500]
+  series: [24, 16, 32, 28]
 };

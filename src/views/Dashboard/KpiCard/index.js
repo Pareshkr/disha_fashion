@@ -15,7 +15,7 @@ import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 
 // const ReportCard = ({ primary, secondary, iconPrimary, color, footerData, iconFooter }) => {
 // const ReportCard = ({ primary, secondary, iconPrimary, color, footerData, iconFooter }) => {
-const ReportCard = ({ color, chipColor, title, count, percentage, isLoss, chart }) => {
+const KpiCard = ({ color, chipColor, title, count, percentage, isLoss, chart }) => {
   // const theme = useTheme();
   // const IconPrimary = iconPrimary;
   // const primaryIcon = iconPrimary ? <IconPrimary fontSize="large" /> : null;
@@ -67,7 +67,7 @@ const ReportCard = ({ color, chipColor, title, count, percentage, isLoss, chart 
             </Grid>
           )}
         </Grid>
-        <Typography sx={{ paddingLeft: 2.25, paddingRight: 2.25 }} variant="h6" color="textSecondary">
+        <Typography sx={{ paddingLeft: 2.25, paddingRight: 2.25 }} variant="h5" color="textSecondary">
           {title}
         </Typography>
       </Stack>
@@ -121,4 +121,4 @@ const ReportCard = ({ color, chipColor, title, count, percentage, isLoss, chart 
 //   color: PropTypes.string
 // };
 
-export default ReportCard;
+export default KpiCard;
