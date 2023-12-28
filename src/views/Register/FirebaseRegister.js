@@ -89,8 +89,8 @@ const FirebaseRegister = ({ ...rest }) => {
 
       <Formik
         initialValues={{
-          email: 'admin@phoenixcoded.net',
-          password: 'aA123456',
+          email: 'admin@neophyte.ai',
+          password: 'neo12345',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -170,9 +170,11 @@ const FirebaseRegister = ({ ...rest }) => {
               />
             </Box>
             <Box mt={2}>
-              <Button color="primary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
-                Register
-              </Button>
+              <Link to={'/'}>
+                <Button color="primary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+                  Register
+                </Button>
+              </Link>
             </Box>
           </form>
         )}

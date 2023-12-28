@@ -5,15 +5,23 @@ import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 
+// third party
+import {
+  // useSelector,
+  useDispatch
+} from 'react-redux';
+
 // project import
 // import SearchSection from './SearchSection';
 import ProfileSection from './ProfileSection';
 // import NotificationSection from './NotificationSection';
 import { drawerWidth } from 'config.js';
+import * as actionTypes from 'store/actions';
 
 // assets
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 // import { TopNavItems } from 'top-nav-items';
 // import topNavItems from 'top-nav-items';
 // import logo from 'assets/images/logo.svg';
@@ -23,6 +31,9 @@ import { Link } from 'react-router-dom';
 
 const Header = ({ drawerToggle }) => {
   const theme = useTheme();
+  // const customization = useSelector((state) => state.customization);
+  const dispatch = useDispatch();
+  let location = useLocation();
 
   return (
     <>
@@ -31,16 +42,22 @@ const Header = ({ drawerToggle }) => {
           <Box sx={{ display: { xs: 'none', md: 'block' } }}>
             <Grid item>
               <Box mt={0.5}>
-                <Typography variant="h2" align="left" className="black" sx={{ width: '100%', paddingLeft: 1.6 }}>
+                <Typography
+                  onClick={() => window.open('/', '_self')}
+                  variant="h2"
+                  align="left"
+                  className="black cursor-pointer"
+                  sx={{ width: '100%', paddingLeft: 1.6 }}
+                >
                   Disha
                 </Typography>
                 {/* <img className='w-[80%]' src={NeophyteLogo} alt="Logo" /> */}
               </Box>
             </Grid>
           </Box>
-          <Grid item>
+          <Grid sx={{ display: { xs: 'block', md: 'none' } }} item>
             <IconButton
-              className="text-white/10"
+              className="text-black"
               edge="start"
               sx={{ mr: theme.spacing(1.25), color: 'white' }}
               // color="inherit"
@@ -53,35 +70,50 @@ const Header = ({ drawerToggle }) => {
           </Grid>
         </div>
       </Box>
-      <Box sx={{ flexGrow: 1,  }}>
-        <Box className="space-x-8" sx={{flexGrow: 1, display: { xs: 'none', md: 'block' }}}>
+      <Box sx={{ flexGrow: 1 }}>
+        <Box className="space-x-8" sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}>
           <Link
-            to={'/dashboard/default'}
-            className="text-lg border-b-2 border-emerald-500 text-emerald-600 hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600"
+            to={'/'}
+            onClick={() => dispatch({ type: actionTypes.MENU_OPEN, isOpen: 'insights' })}
+            className={`text-lg hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600 ${
+              location.pathname === '/' ? 'border-b-2 border-emerald-500 text-emerald-600' : ''
+            }`}
           >
             Insights
           </Link>
           <Link
-            to={'/dashboard/default'}
-            className="text-lg border-b-2 border-white hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600"
+            to={'/stores'}
+            onClick={() => dispatch({ type: actionTypes.MENU_OPEN, isOpen: 'stores' })}
+            className={`text-lg hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600 ${
+              location.pathname === '/stores' ? 'border-b-2 border-emerald-500 text-emerald-600' : ''
+            }`}
           >
             Stores
           </Link>
           <Link
-            to={'/dashboard/default'}
-            className="text-lg border-b-2 border-white hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600"
+            to={'/brands'}
+            onClick={() => dispatch({ type: actionTypes.MENU_OPEN, isOpen: 'brands' })}
+            className={`text-lg hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600 ${
+              location.pathname === '/brands' ? 'border-b-2 border-emerald-500 text-emerald-600' : ''
+            }`}
           >
-            Brand
+            Brands
           </Link>
           <Link
-            to={'/dashboard/default'}
-            className="text-lg border-b-2 border-white hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600"
+            to={'/customers'}
+            onClick={() => dispatch({ type: actionTypes.MENU_OPEN, isOpen: 'customers' })}
+            className={`text-lg hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600 ${
+              location.pathname === '/customers' ? 'border-b-2 border-emerald-500 text-emerald-600' : ''
+            }`}
           >
             Customers
           </Link>
           <Link
-            to={'/dashboard/default'}
-            className="text-lg border-b-2 border-white hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600"
+            to={'/team'}
+            onClick={() => dispatch({ type: actionTypes.MENU_OPEN, isOpen: 'team' })}
+            className={`text-lg hover:border-b-2 hover:border-emerald-500 hover:text-emerald-600 ${
+              location.pathname === '/team' ? 'border-b-2 border-emerald-500 text-emerald-600' : ''
+            }`}
           >
             Team
           </Link>

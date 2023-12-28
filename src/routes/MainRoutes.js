@@ -4,7 +4,15 @@ import React, { lazy } from 'react';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'component/Loadable';
 
-const DashboardDefault = Loadable(lazy(() => import('../views/Dashboard')));
+const Insight = Loadable(lazy(() => import('../views/Insights')));
+
+const Stores = Loadable(lazy(() => import('../views/Stores')));
+
+const Brands = Loadable(lazy(() => import('../views/Brands')));
+
+const Customers = Loadable(lazy(() => import('../views/Customers')));
+
+const Team = Loadable(lazy(() => import('../views/Team')));
 
 const UtilsTypography = Loadable(lazy(() => import('../views/Utils/Typography')));
 
@@ -18,12 +26,29 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <DashboardDefault />
+      element: <Insight />
     },
     {
-      path: '/dashboard/default',
-      element: <DashboardDefault />
+      path: '/insights',
+      element: <Insight />
     },
+    {
+      path: '/stores',
+      element: <Stores />
+    },
+    {
+      path: '/brands',
+      element: <Brands />
+    },
+    {
+      path: '/customers',
+      element: <Customers />
+    },
+    {
+      path: '/team',
+      element: <Team />
+    },
+
     { path: '/utils/util-typography', element: <UtilsTypography /> },
     { path: '/sample-page', element: <SamplePage /> }
   ]

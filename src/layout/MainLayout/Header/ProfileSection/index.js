@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -119,12 +120,14 @@ const ProfileSection = () => {
                     </ListItemIcon>
                     <ListItemText primary="Lock Screen" />
                   </ListItemButton> */}
-                  <ListItemButton selected={selectedIndex === 4}>
-                    <ListItemIcon>
-                      <MeetingRoomTwoToneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
-                  </ListItemButton>
+                  <Link to={'/login'}>
+                    <ListItemButton selected={selectedIndex === 4}>
+                      <ListItemIcon>
+                        <MeetingRoomTwoToneIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Logout" />
+                    </ListItemButton>
+                  </Link>
                 </List>
               </ClickAwayListener>
             </Paper>

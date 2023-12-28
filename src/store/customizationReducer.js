@@ -4,7 +4,7 @@ import * as actionTypes from './actions';
 // ==============================|| CUSTOMIZATION REDUCER ||============================== //
 
 export const initialState = {
-  isOpen: 'dashboard', //for active default menu
+  isOpen: 'insights', //for active default menu
   navType: ''
 };
 

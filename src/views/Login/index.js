@@ -9,7 +9,7 @@ import { Card, CardContent, Typography, Grid } from '@mui/material';
 import AuthLogin from './FirebaseLogin';
 
 // assets
-import Logo from 'assets/images/logo-dark.svg';
+// import Logo from 'assets/images/logo-dark.svg';
 
 // ==============================|| LOGIN ||============================== //
 
@@ -52,7 +52,10 @@ const Login = () => {
                   </Grid>
                   <Grid item>
                     <RouterLink to="/">
-                      <img alt="Auth method" src={Logo} />
+                      {/* <img alt="Auth method" src={Logo} /> */}
+                      <Typography sx={{ paddingTop: 1 }} color="textPrimary" gutterBottom variant="h3">
+                        Disha
+                      </Typography>
                     </RouterLink>
                   </Grid>
                 </Grid>
@@ -62,9 +65,11 @@ const Login = () => {
               </Grid>
               <Grid container justifyContent="flex-start" sx={{ mt: theme.spacing(2), mb: theme.spacing(1) }}>
                 <Grid item>
-                  <Typography variant="subtitle2" color="secondary" sx={{ textDecoration: 'none', pl: 2 }}>
-                    Create new account
-                  </Typography>
+                  <RouterLink to={'/register'}>
+                    <Typography variant="subtitle2" color="secondary" sx={{ textDecoration: 'none', pl: 2 }}>
+                      Create new account
+                    </Typography>
+                  </RouterLink>
                 </Grid>
               </Grid>
             </Grid>

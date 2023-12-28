@@ -49,10 +49,16 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
           }}
         >
           {/* <Grid item> */}
-            {/* <img style={{ width: '70%', marginLeft: "1.5rem" }} src={NeophyteLogo} alt="Logo" /> */}
-            <Typography variant="h1" align="left" className='text-slate-600' sx={{width: "100%", paddingLeft: 3}}>
-              Disha
-            </Typography>
+          {/* <img style={{ width: '70%', marginLeft: "1.5rem" }} src={NeophyteLogo} alt="Logo" /> */}
+          <Typography
+            onClick={() => window.open('/', '_self')}
+            variant="h1"
+            align="left"
+            className="text-slate-600"
+            sx={{ width: '100%', paddingLeft: 3 }}
+          >
+            Disha
+          </Typography>
           {/* </Grid> */}
         </Grid>
       </Box>

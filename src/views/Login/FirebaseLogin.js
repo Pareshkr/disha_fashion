@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -85,8 +86,8 @@ const FirebaseLogin = ({ ...rest }) => {
 
       <Formik
         initialValues={{
-          email: '',
-          password: '',
+          email: 'admin@neophyte.ai',
+          password: 'neo@12345',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -156,9 +157,11 @@ const FirebaseLogin = ({ ...rest }) => {
             )}
 
             <Box mt={2}>
-              <Button color="primary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
-                Log In
-              </Button>
+              <Link to={'/insights'}>
+                <Button color="primary" disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained">
+                  Log In
+                </Button>
+              </Link>
             </Box>
           </form>
         )}

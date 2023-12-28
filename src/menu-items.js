@@ -43,11 +43,11 @@ export default {
       // icon: icons['NavigationOutlinedIcon'],
       children: [
         {
-          id: 'dashboard',
-          title: 'Dashboard',
+          id: 'insights',
+          title: 'Insights',
           type: 'item',
           icon: icons['SpaceDashboardOutlinedIcon'],
-          url: '/dashboard/default'
+          url: '/'
         },
         {
           id: 'analysis',
