@@ -1,6 +1,6 @@
 # Introduction
 
-This is material design template created based on materially structure
+This is Disha | Fashion
 
 # Getting Started
 
